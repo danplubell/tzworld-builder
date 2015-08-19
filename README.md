@@ -13,3 +13,11 @@ The builder uses a geoJson file that is created by GDAL from the tz_world shape 
 The geoJson file is parsed and converted into a SQLite database.
 
 
+# Usage
+Build the tzworld.db file by doing the following:
+Change directory to the tzworld-builder directory
+Issue the following command:
+make run
+
+This will convert the tz_world.json file into the tzworld.db file.
+
