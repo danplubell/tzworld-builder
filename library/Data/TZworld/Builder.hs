@@ -15,12 +15,11 @@ import qualified Data.List as DL
 import Control.Monad
 import qualified Data.Text as T
 import Paths_tzworld
+
 {-Parse the TZWorld geoJason file into an SQLite database-}
 main :: IO ()
 main = do
-  fp <- getDataFileName "tzworld.db"
-  putStrLn fp
-  db <-open fp
+  db <-open "tzworld.db"
   execute_ db "CREATE TABLE IF NOT EXISTS tzworld (id INTEGER PRIMARY KEY, bucketbytes BLOB)"
   tzbs <- buildTZPolys --parse json from file
   let buckets = buildBuckets (tzbins tzbs) DM.empty -- load buckets
@@ -36,7 +35,7 @@ main = do
 
 {-Insert each bucket into database -}
 insertBucket:: Connection -> (Int,BL.ByteString) -> IO()
-insertBucket db bl = execute db "INSERT INTO tzworld (id,bucketbytes) VALUES (?,?)"
+insertBucket db bl = execute db "INSERT OR REPLACE INTO tzworld (id,bucketbytes) VALUES (?,?)"
                        (uncurry TZWorldField bl )
 
 {-Driver for loading json, decoding json, and making polygons -}
@@ -60,7 +59,7 @@ makeTZPolys w = TZPolys (map makeTZPoly (features w))
 {-Load and decode GeoJson into TZWorld data structure -}
 loadTZWorld:: IO TZWorld
 loadTZWorld = do
-  bs <- BL.readFile "tz_world.json"  
+  bs <- BL.readFile "tz_world.json"
   let tzworld = fromMaybe (error "The json structure is not a tzworld json file") (DA.decode bs::Maybe TZWorld)
       
   return tzworld
