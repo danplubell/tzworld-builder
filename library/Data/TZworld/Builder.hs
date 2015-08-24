@@ -14,7 +14,7 @@ import qualified Data.Set as DS
 import qualified Data.List as DL
 import Control.Monad
 import qualified Data.Text as T
-import Paths_tzworld
+import Paths_tzworld_builder
 
 {-Parse the TZWorld geoJason file into an SQLite database-}
 main :: IO ()

@@ -1,5 +1,5 @@
 name: tzworld-builder
-version: 0.0.1
+version: 0.1.0
 cabal-version: >=1.10
 build-type: Simple
 license: MIT
@@ -22,7 +22,7 @@ library
         Data.TZworld.Builder            
     other-modules:
         Data.TZworld.Internal.Types
-        Paths_tzworld
+        Paths_tzworld_builder
     build-depends:
                   base ==4.*
                 , sqlite-simple >=0.4
