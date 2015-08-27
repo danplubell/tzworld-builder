@@ -22,7 +22,7 @@ main = do
   db <-open "tzworld.db"
   execute_ db "CREATE TABLE IF NOT EXISTS tzworld (id INTEGER PRIMARY KEY, bucketbytes BLOB)"
   tzbs <- buildTZPolys --parse json from file
-  let buckets = buildBuckets (tzbins tzbs) DM.empty -- load buckets
+  let buckets = buildBuckets (tzbins tzbs) buildEmptyMap -- load buckets
   let bucketbllist = map DB.encode (DM.elems buckets) -- create list of bytestrings for each bucket
 
   let bllisttup = zip [(0::Int)..] bucketbllist --index the buckets
@@ -37,6 +37,9 @@ main = do
 insertBucket:: Connection -> (Int,BL.ByteString) -> IO()
 insertBucket db bl = execute db "INSERT OR REPLACE INTO tzworld (id,bucketbytes) VALUES (?,?)"
                        (uncurry TZWorldField bl )
+
+buildEmptyMap::DM.IntMap (DS.Set TZPoly)
+buildEmptyMap = DM.fromList  [(k,DS.empty) | k <- [calcBucket (-180), calcBucket (-165)..calcBucket 180]]
 
 {-Driver for loading json, decoding json, and making polygons -}
 buildTZPolys ::IO TZPolys
