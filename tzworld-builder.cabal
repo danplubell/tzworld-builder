@@ -15,8 +15,7 @@ tested-with: GHC ==7.10
 extra-source-files:
     CHANGELOG.md
     README.md
-data-files:
-    tzworld.db
+
 library
     exposed-modules:
         Data.TZworld.Builder            
