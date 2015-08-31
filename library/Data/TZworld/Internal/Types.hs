@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings,DeriveGeneric #-}
-{-# OPTIONS_GHC -fno-warn-unused-binds #-}
+{-# OPTIONS_GHC -fno-warn-unused-binds -fno-warn-unused-imports #-}
 
 module Data.TZworld.Internal.Types  where
 
@@ -10,7 +10,7 @@ import GHC.Generics
 import qualified Data.ByteString.Lazy as BL
 import Database.SQLite.Simple.FromRow
 import Database.SQLite.Simple.ToRow
-
+import Control.Applicative
 
 type Longitude = Double
 type Latitude = Double
