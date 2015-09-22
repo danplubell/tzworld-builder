@@ -3,4 +3,6 @@
 /cabal.sandbox.config
 /dist/
 /tmp/
+*.db
+/.stack-work/
 
